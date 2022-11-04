@@ -56,39 +56,35 @@ class Customer {
     return new Customer(customer);
   }
 
-  /** return customer's full name */
-  fullName() {
-    return `${this.firstName} ${this.lastName}`;
-  }
 
   /** search for customer by  */
-
   static async search(name) {
     // LIKE
     // split(" ")
     // check length
     const names = name.split(" ");
+    let results;
     if (names.length === 1) {
-      const results = await db.query(
+      results = await db.query(
         `SELECT id,
                   first_name AS "firstName",
                   last_name  AS "lastName",
                   phone,
                   notes FROM customers
-        WHERE (first_name LIKE "%$1%") OR
-              (last_name LIKE "%$1%")`, [names]);
+        WHERE (first_name ILIKE $1) OR
+              (last_name ILIKE $1)`, ['%'+names[0]+'%']);
 
     } else if (names.length === 2) {
-      const results = await db.query(
+      results = await db.query(
         `SELECT id,
                   first_name AS "firstName",
                   last_name  AS "lastName",
                   phone,
                   notes FROM customers
-        WHERE ((first_name LIKE "%$1%") AND
-              (last_name LIKE "%$2%")) OR
-              ((first_name LIKE "%$2%") AND
-              (last_name LIKE "%$1%"))`, [names]);
+        WHERE ((first_name ILIKE $1) AND
+              (last_name ILIKE $2)) OR
+              ((first_name ILIKE $2) AND
+              (last_name ILIKE $1))`, ['%'+names[0]+'%', '%'+names[1]+'%']);
     }
 
     if (results.rows[0] === undefined) {
@@ -101,6 +97,10 @@ class Customer {
 
   }
 
+  /** return customer's full name */
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
 
 
   /** get all reservations for this customer. */
