@@ -17,9 +17,16 @@ router.get("/", async function (req, res, next) {
     const customers = await Customer.search(req.query.search)
     return res.render("customer_search_list.html", { customers })
   }
-  
+
   const customers = await Customer.all();
   return res.render("customer_list.html", { customers });
+});
+
+/** Show list of top ten customers by reservations */
+router.get('/top-ten/', async function (req, res, next) {
+  console.log('TOP TEN');
+  const topTenCust = await Customer.topTen();
+  return res.render("customer_topTen_list.html", { topTenCust });
 });
 
 /** Form to add a new customer. */

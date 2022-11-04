@@ -97,6 +97,29 @@ class Customer {
 
   }
 
+  /** Search for top 10 customers with most reservations and return array of
+   * customer instances */
+  static async topTen() {
+    const results = await db.query(
+      `
+      SELECT
+        c.id,
+        c.first_name AS "firstName",
+        c.last_name  AS "lastName",
+        c.phone,
+        c.notes
+      FROM customers AS c
+        JOIN reservations AS r ON c.id = r.customer_id
+      GROUP BY c.id
+      ORDER BY COUNT(r.customer_ID) DESC
+      LIMIT 10;
+      `
+    )
+
+    return results.rows.map(c => new Customer(c));
+  }
+
+
   /** return customer's full name */
   fullName() {
     return `${this.firstName} ${this.lastName}`;
