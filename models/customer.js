@@ -57,13 +57,17 @@ class Customer {
   }
 
 
-  /** search for customer by  */
+  /**
+   *  Search for customers by an inputted value
+   *    Input: name - (string)
+   *    Output: array of customer objects
+  */
+
   static async search(name) {
-    // LIKE
-    // split(" ")
-    // check length
+
     const names = name.split(" ");
     let results;
+
     if (names.length === 1) {
       results = await db.query(
         `SELECT id,
@@ -87,14 +91,7 @@ class Customer {
               (last_name ILIKE $1))`, ['%'+names[0]+'%', '%'+names[1]+'%']);
     }
 
-    if (results.rows[0] === undefined) {
-      const err = new Error(`No customers matching that query.`);
-      err.status = 404;
-      throw err;
-    }
-
     return results.rows.map(c => new Customer(c));
-
   }
 
   /** Search for top 10 customers with most reservations and return array of

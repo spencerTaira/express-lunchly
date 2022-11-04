@@ -5,7 +5,7 @@
   <h1>Top Ten Customers</h1>
 
   <ol style="column-count: 1">
-    {% for customer in topTenCust %}
+    {% for customer in topTenCustomers %}
       <li>
         <a href="/{{ customer.id }}/">
           {{ customer.fullName() }}
