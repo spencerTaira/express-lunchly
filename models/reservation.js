@@ -17,6 +17,18 @@ class Reservation {
     this.notes = notes;
   }
 
+  get numGuests() {
+    return this._numGuests
+  }
+
+  set numGuests(num) {
+    if (num < 1) {
+      throw new Error(`You must have at least one person
+                      in your party to make a reservation.`);
+    }
+    this._numGuests = num;
+  }
+
   /** formatter for startAt */
 
   getFormattedStartAt() {
@@ -66,6 +78,23 @@ class Reservation {
       );
     }
   }
+
+
+  static async getLatestReservation(id) {
+    const result = await db.query(
+      `SELECT id,
+                  customer_id AS "customerId",
+                  num_guests AS "numGuests",
+                  start_at AS "startAt",
+                  notes AS "notes"
+           FROM reservations
+           WHERE customer_id = $1
+           ORDER BY start_at DESC
+           LIMIT 1`, [id]
+    )
+    return new Reservation(result.rows[0]);
+  }
+
 }
 
 

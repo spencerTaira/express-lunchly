@@ -19,6 +19,18 @@ router.get("/", async function (req, res, next) {
   }
 
   const customers = await Customer.all();
+
+  // customers.map(async (c) => {
+  //   const reservation = await Reservation.getLatestReservation(c.id);
+  //   console.log(reservation.startAt);
+
+  //   debugger;
+
+  //   c.lastReservation = reservation
+
+
+  })
+
   return res.render("customer_list.html", { customers });
 });
 

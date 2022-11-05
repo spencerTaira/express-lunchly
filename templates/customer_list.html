@@ -10,8 +10,10 @@
     {% for customer in customers %}
       <li>
         <a href="/{{ customer.id }}/">
-          {{ customer.fullName() }}
+          {{ customer.fullName }}
         </a>
+        <p>{{ customer.lastReservation.startAt }}</p>
+        <p>{{ customer.lastReservation.numGuests }}</p>
       </li>
     {% endfor %}
   </ul>

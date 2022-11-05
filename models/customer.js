@@ -16,6 +16,16 @@ class Customer {
     this.notes = notes;
   }
 
+  /**  */
+  get lastReservation() {
+    return this._lastReservation
+  }
+
+  set lastReservation(reservation) {
+    this._lastReservation = reservation
+  }
+
+
   /** find all customers. */
 
   static async all() {
@@ -118,7 +128,7 @@ class Customer {
 
 
   /** return customer's full name */
-  fullName() {
+  get fullName() {
     return `${this.firstName} ${this.lastName}`;
   }
 

@@ -8,7 +8,7 @@
     {% for customer in topTenCustomers %}
       <li>
         <a href="/{{ customer.id }}/">
-          {{ customer.fullName() }}
+          {{ customer.fullName }}
         </a>
       </li>
     {% endfor %}
