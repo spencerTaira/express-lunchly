@@ -18,11 +18,11 @@ class Customer {
 
   /**  */
   get lastReservation() {
-    return this._lastReservation
+    return this._lastReservation;
   }
 
   set lastReservation(reservation) {
-    this._lastReservation = reservation
+    this._lastReservation = reservation;
   }
 
 

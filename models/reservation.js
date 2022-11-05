@@ -91,7 +91,10 @@ class Reservation {
            WHERE customer_id = $1
            ORDER BY start_at DESC
            LIMIT 1`, [id]
-    )
+    );
+    if (!result.rows[0]) {
+      return {}
+    }
     return new Reservation(result.rows[0]);
   }
 
